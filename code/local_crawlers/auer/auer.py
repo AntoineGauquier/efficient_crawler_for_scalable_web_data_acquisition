@@ -134,9 +134,10 @@ if __name__ == "__main__":
     budget = int(sys.argv[4])
     n_grams_path_dom_path_representation = int(sys.argv[5])
     batch_size_url = int(sys.argv[6])
-    alpha = sys.argv[7]
-    site_name = sys.argv[8]
-    log_path_all_sites = sys.argv[9]
+    use_url_classifier = int(sys.argv[7])
+    alpha = sys.argv[8]
+    site_name = sys.argv[9]
+    log_path_all_sites = sys.argv[10]
 
     db_path = os.path.join(os.getcwd(), "data", str(site_name) + ".db")
     table_name = site_name
@@ -161,7 +162,11 @@ if __name__ == "__main__":
     if budget == -1:
         budget = 1e10
 
-    use_url_classifier = True
+    if use_url_classifier == 1:
+        use_url_classifier = True
+    else:
+        use_url_classifier = False
+
     classifier_params = {'max_iter_optimizer':100, 'random_state_optimizer':42, 'n_in_ngrams':2, 'batch_size':batch_size_url}
 
     crawler = AUERCrawler(db_path=db_path, 
