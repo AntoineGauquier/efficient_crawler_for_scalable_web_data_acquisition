@@ -1,17 +1,18 @@
 # Efficient Crawler for Scalable Web Data Acquisition
 
 This repository provides additional content, code, data, and models supplementing the
-research article *Efficient Crawler for Scalable Web Data Acquisition* by Antoine Gauquier, 
+research article *Efficient Crawler for Scalable Web Data Acquisition* by Antoine Gauquier,
 [Ioana Manolescu](https://pages.saclay.inria.fr/ioana.manolescu/), and [Pierre Senellart](https://pierre.senellart.com/).
 
 ## Additional content
 
-[Appendix to the original paper](), with detailed experimental results and 
-proof of intractability of the graph crawling problem.
+[Supplementary material for the original paper](supplementary.pdf), with
+detailed experimental results, additional related work, and proof of
+intractability of the graph crawling problem.
 
 ## Dataset
 
-We are currently working on making locally replicated crawling data available (direct availability 
+We are currently working on making locally replicated crawling data available (direct availability
 being impossible due to rights issues).
 
 ## Code
