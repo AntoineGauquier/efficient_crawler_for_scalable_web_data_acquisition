@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.join(os.getcwd(),'local_crawlers'))
+sys.path.append(os.path.join(os.getcwd(),'crawlers'))
 
 from generic_local_crawler import *
 from rl_actions import *
@@ -192,7 +192,7 @@ if __name__ == "__main__":
 
         db_path = os.path.join(os.getcwd(), "data", str(site_name) + ".db")
         table_name = site_name
-        log_path = os.path.join(os.getcwd(), "local_crawlers/offline_dom/logs", str(log_path_all_sites), str(site_name))
+        log_path = os.path.join(os.getcwd(), "crawlers/offline_dom/logs", str(log_path_all_sites), str(site_name))
        
         if not os.path.exists(log_path):
             os.mkdir(log_path)

@@ -1,6 +1,6 @@
 import sys
 import os
-sys.path.append(os.path.join(os.getcwd(),'local_crawlers'))
+sys.path.append(os.path.join(os.getcwd(),'crawlers'))
 
 from random import choice
 import os
@@ -70,7 +70,7 @@ if __name__ == "__main__":
 
         db_path = os.path.join(os.getcwd(), "data", str(site_name) + ".db")
         table_name = site_name
-        log_path = os.path.join(os.getcwd(), "local_crawlers/random/logs", str(log_path_all_sites), str(site_name))
+        log_path = os.path.join(os.getcwd(), "crawlers/random/logs", str(log_path_all_sites), str(site_name))
        
         if not os.path.exists(log_path):
             os.mkdir(log_path)
