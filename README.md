@@ -35,8 +35,8 @@ You will find in the [local_crawlers](code/local_crawlers/) folder, the code we 
 * [data](code/local_crawlers/data/) is the place where locally replicated websites in the form of a `.db` file should be found.
 * [crawlers](code/local_crawlers/crawlers/) contains the code of the different crawlers we present in the paper: our approach as well as baselines (one subdirectory for each crawler). [generic_local_crawler.py](code/local_crawlers/crawlers/generic_local_crawler.py) contains the local crawling framework used for all different crawlers, and [rl_actions.py](code/local_crawlers/crawlers/rl_actions.py) manages the actions when reinforcement learning is used.
 * [crawl.sh](code/local_crawlers/script.sh) is a script that runs crawls by choosing a crawler, its parameters, etc.
-* [graphical_results](code/graphical_results/) contains the code used to generate plots from crawls runs, exactly as in the paper.
-* [generate_plots.sh](code/graphical_results/generate_plots.sh) is a script that generates plots by specifying where are the crawl results, which crawlers you want to integrate, etc.
+* [graphical_results](code/local_crawlers/graphical_results/) contains the code used to generate plots from crawls runs, exactly as in the paper.
+* [generate_plots.sh](code/local_crawlers/graphical_results/generate_plots.sh) is a script that generates plots by specifying where are the crawl results, which crawlers you want to integrate, etc.
 
 ### On-Line Crawler
 
