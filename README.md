@@ -12,7 +12,17 @@ intractability of the graph crawling problem.
 
 ## Dataset
 
-Since intellectual property forbids us to redistribute content we are not author of, we cannot provide direct access to the replicated websites used in the paper to conduct experiments. We are therefore working on making this data available through a third party who takse responsibility for managing the rights associated with redistribution.
+Since intellectual property forbids us to redistribute content we are not author of, we cannot provide direct access to the replicated websites used in the paper to conduct experiments. These datasets can be provided upon request, however. The original websites are available from the following URLs:
+
+- <https://www.assemblee-nationale.fr/>
+- <https://www.collectivites-locales.gouv.fr/>
+- <https://www.cnis.fr/>
+- <https://www.education.gouv.fr/>
+- <https://www.ilo.org/>
+- <https://www.interieur.gouv.fr/>
+- <https://www.soumu.go.jp/>
+- <https://www.justice.gouv.fr/>
+- <https://www.psa.gov.qa/ar/Pages/default.aspx>
 
 ## Code
 
@@ -20,18 +30,17 @@ The source code of two types of crawlers are made available.
 
 ### Local Crawlers
 
-You will find in the [local\_crawlers](code/local_crawlers/) folder, the code we used to conduct crawling experiments locally. More especially:
-* [data](code/local_crawlers/data/) is the place where locally replicated websites in a form of a `.db` file should be found.
-* [crawlers](code/local_crawlers/crawlers/) contains the code of the different crawlers we present in the paper: our approach as well as baselines (one subdirectory for each crawler). [generic\_local\_crawler.py](code/local_crawlers/crawlers/generic_local_crawler.py) contains the local crawling framework used for all different crawlers, and [rl\_actions.py](code/local_crawlers/crawlers/rl_actions.py) manages the actions when reinforcement learning is used.
-* [crawl.sh](code/local_crawlers/script.sh) is a script that runs crawls by choosing a crawler, its parameters, etc.
-* [graphical\_results](code/graphical_results/) contains the code used to generate plots from crawls runs, exactly as in the paper. 
-* [generate\_plots.sh](code/graphical_results/generate_plots.sh) is a script that generates plots by specifying where are the crawl results, which crawlers you want to integrate, etc.
+You will find in the [local_crawlers](code/local_crawlers/) folder, the code we used to conduct crawling experiments locally. Specifically:
 
-Once the replicated websites we used in the paper will be made available, all of this will make possible the re-generation of the results presented in the paper.
+* [data](code/local_crawlers/data/) is the place where locally replicated websites in the form of a `.db` file should be found.
+* [crawlers](code/local_crawlers/crawlers/) contains the code of the different crawlers we present in the paper: our approach as well as baselines (one subdirectory for each crawler). [generic_local_crawler.py](code/local_crawlers/crawlers/generic_local_crawler.py) contains the local crawling framework used for all different crawlers, and [rl_actions.py](code/local_crawlers/crawlers/rl_actions.py) manages the actions when reinforcement learning is used.
+* [crawl.sh](code/local_crawlers/script.sh) is a script that runs crawls by choosing a crawler, its parameters, etc.
+* [graphical_results](code/graphical_results/) contains the code used to generate plots from crawls runs, exactly as in the paper.
+* [generate_plots.sh](code/graphical_results/generate_plots.sh) is a script that generates plots by specifying where are the crawl results, which crawlers you want to integrate, etc.
 
 ### On-Line Crawler
 
-[online\_crawler](code/onlince_crawler) is not available yet, but will provide the efficient crawler we present in an on-line fashion, directly crawling websites by doing real HTTP queries over Web servers. This crawler *will not* allow the replication of the results presented in the paper, as a website (and therefore, its content), always dynamically evolves over time.
+[online_crawler](code/online_crawler) is not available yet, but will provide the efficient crawler we present in an on-line fashion, directly crawling websites by doing real HTTP queries over Web servers.
 
 ## Contact
 
