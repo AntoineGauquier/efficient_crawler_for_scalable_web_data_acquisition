@@ -38,9 +38,11 @@ You will find in the [local_crawlers](code/local_crawlers/) folder, the code we 
 * [graphical_results](code/local_crawlers/graphical_results/) contains the code used to generate plots from crawls runs, exactly as in the paper.
 * [generate_plot.sh](code/local_crawlers/generate_plot.sh) is a script that generates plots by specifying where are the crawl results, which crawlers you want to integrate, etc.
 
-### On-Line Crawler
+### On-Line to Local Crawler
 
-[online_crawler](code/online_crawler) is not available yet, but will provide the efficient crawler we present in an on-line fashion, directly crawling websites by doing real HTTP queries over Web servers.
+In [online_to_local_crawler](code/online_to_local_crawler), you will find a script [online_to_local_crawling.sh](code/online_to_local_crawler/online_to_local_crawling.sh) that can be used to make local replications of websites, to further conduct local crawling experiments, as presented above. The replications as stored as SQLite3 [^1] relational databases in the [data](code/data/) folder. 
+
+[^1]: https://docs.python.org/3/library/sqlite3.html
 
 ## Contact
 
