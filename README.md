@@ -40,7 +40,7 @@ You will find in the [local_crawlers](code/local_crawlers/) folder, the code we 
 
 ### On-Line to Local Crawler
 
-In [online_to_local_crawler](code/online_to_local_crawler), you will find a script [online_to_local_crawling.sh](code/online_to_local_crawler/online_to_local_crawling.sh) that can be used to make local replications of websites, to further conduct local crawling experiments, as presented above. The replications as stored as SQLite3 [^1] relational databases in the [data](code/data/) folder. 
+In [online_to_local_crawler](code/online_to_local_crawler), you will find a script [online_to_local_crawling.sh](code/online_to_local_crawler/online_to_local_crawling.sh) that can be used to make local replications of websites, to further conduct local crawling experiments, as presented above. The replications as stored are SQLite3 [^1] relational databases in the [data](code/local_crawlers/data/) folder. 
 
 [^1]: https://docs.python.org/3/library/sqlite3.html
 
