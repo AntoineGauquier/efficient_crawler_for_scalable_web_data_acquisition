@@ -2,7 +2,7 @@
 
 This repository provides additional content, code, and data supplementing the
 research article *Efficient Crawler for Scalable Web Data Acquisition* by Antoine Gauquier,
-[Ioana Manolescu](https://pages.saclay.inria.fr/ioana.manolescu/), and [Pierre Senellart](https://pierre.senellart.com/).
+[Ioana Manolescu], and [Pierre Senellart].
 
 ## Additional content
 
@@ -43,11 +43,3 @@ You will find in the [local_crawlers](code/local_crawlers/) folder, the code we 
 In [online_to_local_crawler](code/online_to_local_crawler), you will find a script [online_to_local_crawling.sh](code/online_to_local_crawler/online_to_local_crawling.sh) that can be used to make local replications of websites, to further conduct local crawling experiments, as presented above. The replications as stored are SQLite3 [^1] relational databases in the [data](code/local_crawlers/data/) folder. 
 
 [^1]: https://docs.python.org/3/library/sqlite3.html
-
-## Contact
-
-<https://github.com/AntoineGauquier/efficient_crawler_for_scalable_web_data_acquisition/>
-
-* Antoine Gauquier <antoine.gauquier@ens.psl.eu>
-* Ioana Manolescu <ioana.manolescu@inria.fr>
-* Pierre Senellart <pierre@senellart.com>
