@@ -2,7 +2,7 @@
 
 This repository provides additional content, code, and data supplementing the
 research article *Efficient Crawler for Scalable Web Data Acquisition* by Antoine Gauquier,
-[Ioana Manolescu], and [Pierre Senellart].
+Ioana Manolescu, and Pierre Senellart.
 
 ## Additional content
 
