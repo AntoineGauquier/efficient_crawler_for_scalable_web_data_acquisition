@@ -6,7 +6,7 @@ research article *Efficient Crawler for Scalable Web Data Acquisition*.
 ## Additional content
 
 [Supplementary material for the original paper](supplementary.pdf), with
-detailed experimental results, additional related work, and proof of
+detailed experimental results, additional related work, algorithms, and proof of
 intractability of the graph crawling problem.
 
 ## Dataset
