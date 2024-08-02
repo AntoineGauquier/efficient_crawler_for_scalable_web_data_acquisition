@@ -25,7 +25,7 @@ Since intellectual property forbids us to redistribute content we are not author
 
 ## Code
 
-The source code of two types of crawlers are made available.
+The source code of two types of crawlers are made available under the [MIT License](LICENSE).
 
 ### Local Crawlers
 
