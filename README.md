@@ -11,18 +11,27 @@ intractability of the graph crawling problem.
 
 ## Dataset
 
-Since intellectual property forbids us to redistribute content we are not author of, we cannot provide direct access to the replicated websites used in the paper to conduct experiments. These datasets can be provided upon request, however. The original websites are available from the following URLs:
+Since intellectual property laws forbids us to redistribute content we are not author of, we cannot provide direct access to the replicated websites used in the paper to conduct experiments. These datasets can be provided upon request, however. The original websites are available from the following URLs:
 
+- <https://www.abs.gov.au/>
 - <https://www.assemblee-nationale.fr/>
+- <https://www.bea.gov/>
+- <https://www.census.gov/>
 - <https://www.collectivites-locales.gouv.fr/>
 - <https://www.cnis.fr/>
 - <https://www.education.gouv.fr/>
 - <https://www.ilo.org/>
 - <https://www.interieur.gouv.fr/>
+- <https://www.insee.fr/>
 - <https://www.soumu.go.jp/>
 - <https://www.justice.gouv.fr/>
-- <https://www.psa.gov.qa/ar/Pages/default.aspx>
-
+- <https://nces.ed.gov/>
+- <https://www.oecd.org/>
+- <https://okfn.org/>
+- <https://www.psa.gov.qa/>
+- <https://www.who.int/>
+- <https://www.worldbank.org/>
+>
 ## Code
 
 The source code of two types of crawlers are made available under the [MIT License](LICENSE).
@@ -39,6 +48,6 @@ You will find in the [local_crawlers](code/local_crawlers/) folder, the code we 
 
 ### On-Line to Local Crawler
 
-In [online_to_local_crawler](code/online_to_local_crawler), you will find a script [online_to_local_crawling.sh](code/online_to_local_crawler/online_to_local_crawling.sh) that can be used to make local replications of websites, to further conduct local crawling experiments, as presented above. The replications as stored are SQLite3 [^1] relational databases in the [data](code/local_crawlers/data/) folder. 
+In [online_to_local_crawler](code/online_to_local_crawler), you will find a script [online_to_local_crawling.sh](code/online_to_local_crawler/online_to_local_crawling.sh) that can be used to make local replications of websites, to further conduct local crawling experiments, as presented above. The replications as stored are SQLite3 [^1] relational databases in the [data](code/local_crawlers/data/) folder.
 
 [^1]: https://docs.python.org/3/library/sqlite3.html
