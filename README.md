@@ -1,4 +1,4 @@
-# Efficient Crawling for Scalable Web Data Acquisition
+# Efficient Crawling for Scalable Web Data Acquisition (technical report and experiment reproducibility kit)
 
 This repository provides additional content, code, and data supplementing the
 research article *Efficient Crawling for Scalable Web Data Acquisition*.
@@ -31,7 +31,7 @@ Since intellectual property laws forbids us to redistribute content we are not a
 - <https://www.psa.gov.qa/>
 - <https://www.who.int/>
 - <https://www.worldbank.org/>
->
+
 ## Code
 
 The source code of two types of crawlers are made available under the [MIT License](LICENSE).
