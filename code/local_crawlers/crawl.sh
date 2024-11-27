@@ -2,10 +2,11 @@
 clear
 echo "Select the crawler you want to use for local crawling:"
 echo "Type 1 for Sleeping-Bandit (AUER algorithm) crawler"
-echo "Type 2 for Offline-DOM paths crawler (baseline)"
-echo "Type 3 for Breadth-First Search crawler (baseline)"
-echo "Type 4 for Depth-First Search crawler (baseline)"
-echo "Type 5 for random crawler (baseline)"
+echo "Type 2 for Focused Crawler (baseline)"
+echo "Type 3 for Offline-DOM paths crawler (baseline)"
+echo "Type 4 for Breadth-First Search crawler (baseline)"
+echo "Type 5 for Depth-First Search crawler (baseline)"
+echo "Type 6 for random crawler (baseline)"
 read -p "Please enter the crawler's number you want to use: " method
 
 case $method in
@@ -31,6 +32,17 @@ case $method in
 		done
 	;;
     2)
+    clear
+    echo "The use of the Focused Crawler requires to set a certain number of parameters, which follows."
+    read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
+    read -p "Name of the directory in which to save crawling information (X in offline_dom/logs/X, make sure that it is created beforehand): " log_path_all_sites
+    read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
+    echo ""
+    echo "Launching a run of Focused Crawler for site $site_name ..."
+    python3 crawlers/focused/focused_crawler.py "$site_name" "$log_path_all_sites" "$budget"
+    ;;
+
+    3)
 		clear
 		echo "The use of Offline-DOM paths crawler requires to set a certain number of parameters, which follows."
 		read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
@@ -44,7 +56,7 @@ case $method in
 		echo "Launching a run of Offline-DOM paths crawler for site $site_name ..."
 		python3 crawlers/offline_dom/offline_dom_crawler.py "$threshold" "$m" "$w" "$budget" "$n" 0 "$log_path_all_sites" "$site_name"
 	;;
-	3)
+	4)
 		clear
 		echo "The use of Breadth-First Search crawler requires to set a certain number of parameters, which follows."
 		read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
@@ -54,7 +66,7 @@ case $method in
 		echo "Launching a run of Breadth-First Search crawler for site $site_name ..."
 		python3 crawlers/bfs/bfs.py "$budget" "$log_path_all_sites" "$site_name"
 	;;
-	4)
+	5)
 		clear
 		echo "The use of Depth-First Search crawler requires to set a certain number of parameters, which follows."
 		read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
@@ -64,7 +76,7 @@ case $method in
 		echo "Launching a run of Depth-First Search crawler for site $site_name ..."
 		python3 crawlers/dfs/dfs.py "$budget" "$log_path_all_sites" "$site_name"
 	;;
-	5)
+	6)
 
 		clear
 		echo "The use of random crawler requires to set a certain number of parameters, which follows."
