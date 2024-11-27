@@ -1,15 +1,15 @@
-# Efficient Crawler for Scalable Web Data Acquisition
+# Efficient Crawling for Scalable Web Data Acquisition
 
 This repository provides additional content, code, and data supplementing the
-research article *Efficient Crawler for Scalable Web Data Acquisition*.
+research article *Efficient Crawling for Scalable Web Data Acquisition*.
 
 ## Additional content
 
-[Supplementary material for the original paper](supplementary.pdf), with
-detailed experimental results, additional related work, algorithms, and proof of
+[Technical report (extended version of the paper)](main.pdf), with
+detailed experimental results, additional related work, and proof of
 intractability of the graph crawling problem.
 
-## Dataset
+## Websites
 
 Since intellectual property laws forbids us to redistribute content we are not author of, we cannot provide direct access to the replicated websites used in the paper to conduct experiments. These datasets can be provided upon request, however. The original websites are available from the following URLs:
 
