@@ -1,5 +1,5 @@
- #!/bin/bash
- 
+#!/bin/bash
+
 get_location() {
   local method=$1
   local dir=$2
