@@ -74,6 +74,12 @@ class BFSOnlineCrawler(scrapy.Spider):
         spider = super(BFSOnlineCrawler, cls).from_crawler(crawler, *args, **kwargs)
  
         crawler.settings.set('LOG_FILE', os.path.join("crawlers", "bfs_online_crawler", "logs", "logs_" + kwargs.get('site_name', None) + "_" + datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".log"))
+
+        if not os.path.exists(os.path.join("crawlers", "bfs_online_crawler", "logs")):
+            os.mkdir(os.path.join("crawlers", "bfs_online_crawler", "logs"))
+        if not os.path.exists(os.path.join("crawlers", "bfs_online_crawler", "output")):
+            os.mkdir(os.path.join("crawlers", "bfs_online_crawler", "output"))
+        
         crawler.settings.set('LOG_ENABLED', True)
         crawler.settings.set('COOKIES_ENABLED', False)
         crawler.settings.set('USER_AGENT', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36')
