@@ -22,9 +22,16 @@ case $method in
 		read -p "Parameter m in multiplicative hashing function: " m
 		read -p "Parameter w in multiplicative hashing function: " w
 		read -p "n in n-grams used in DOM path vector representation: " n
-				read -p "Exploration--exploitation coefficient alpha (2s2 for 2sqrt2, float otherwise): " alpha
+    read -p "Exploration--exploitation coefficient alpha (2s2 for 2sqrt2, float otherwise): " alpha
 		echo ""
 		echo "Launching a run of Sleeping-Bandit crawler for site $site_name ..."
+
+    budget=${budget:--1}
+    threshold=${threshold:-.75}
+    m=${m:-12}
+    w=${w:-15}
+    n=${n:-2}
+    alpha=${alpha:-2s2}
 
 		project_path="$current_dir/crawlers/auer_crawler"
 
@@ -41,7 +48,7 @@ case $method in
     		-a w="$w" \
     		-a n_grams_path_dom_path_representation="$n" \
     		-a budget="$budget"
-		
+
 	;;
     2)
     clear
@@ -51,7 +58,7 @@ case $method in
     read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
     echo ""
     echo "Launching a run of Focused Crawler for site $site_name ..."
-    
+
     project_path="$current_dir/crawlers/focused_online_crawler"
 
 	PYTHONPATH="$project_path" SCRAPY_SETTINGS_MODULE="focused_online_crawler.settings" scrapy crawl focused_online_crawler \
