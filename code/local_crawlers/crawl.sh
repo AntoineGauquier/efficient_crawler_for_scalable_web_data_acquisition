@@ -26,6 +26,17 @@ case $method in
 		read -p "Training epoch size of URL classifier (if you answered \"Yes\" above): " batch_size_url
 		echo ""
 		echo "Launching $num_executions runs of Sleeping-Bandit crawler for site $site_name ..."
+
+	    budget=${budget:--1}
+	    threshold=${threshold:-.75}
+	    m=${m:-12}
+	    w=${w:-15}
+	    n=${n:-2}
+	    alpha=${alpha:-2s2}
+	    use_url_classifier=${use_url_classifier:-True}
+	    batch_size_url=${batch_size_url:-10}
+	    num_executions=${num_executions:-1}
+
 		for (( i=1; i<=$num_executions; i++ )); do
 			python3 crawlers/auer/auer.py "$threshold" "$m" "$w" "$budget" "$n" "$batch_size_url" "$use_url_classifier" "$alpha" "$site_name" "$log_path_all_sites" &
 			sleep 4
@@ -39,6 +50,9 @@ case $method in
     read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
     echo ""
     echo "Launching a run of Focused Crawler for site $site_name ..."
+
+	budget=${budget:--1}
+
     python3 crawlers/focused/focused_crawler.py "$site_name" "$log_path_all_sites" "$budget"
     ;;
 
@@ -54,6 +68,13 @@ case $method in
 		read -p "n in n-grams used in DOM path vector representation: " n
 		echo ""
 		echo "Launching a run of Offline-DOM paths crawler for site $site_name ..."
+
+	    budget=${budget:--1}
+	    threshold=${threshold:-.75}
+	    m=${m:-12}
+	    w=${w:-15}
+	    n=${n:-2}
+
 		python3 crawlers/offline_dom/offline_dom_crawler.py "$threshold" "$m" "$w" "$budget" "$n" 0 "$log_path_all_sites" "$site_name"
 	;;
 	4)
@@ -64,6 +85,9 @@ case $method in
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		echo ""
 		echo "Launching a run of Breadth-First Search crawler for site $site_name ..."
+
+	    budget=${budget:--1}
+
 		python3 crawlers/bfs/bfs.py "$budget" "$log_path_all_sites" "$site_name"
 	;;
 	5)
@@ -74,6 +98,9 @@ case $method in
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		echo ""
 		echo "Launching a run of Depth-First Search crawler for site $site_name ..."
+
+	    budget=${budget:--1}
+
 		python3 crawlers/dfs/dfs.py "$budget" "$log_path_all_sites" "$site_name"
 	;;
 	6)
@@ -85,6 +112,9 @@ case $method in
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		echo ""
 		echo "Launching a run of random crawler for site $site_name ..."
+
+	    budget=${budget:--1}
+		
 		python3 crawlers/random/random_crawler.py "$budget" "$log_path_all_sites" "$site_name"
 	;;
 esac

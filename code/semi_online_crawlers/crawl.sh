@@ -59,6 +59,8 @@ case $method in
     echo ""
     echo "Launching a run of Focused Crawler for site $site_name ..."
 
+    budget=${budget:--1}
+
     project_path="$current_dir/crawlers/focused_online_crawler"
 
 	PYTHONPATH="$project_path" SCRAPY_SETTINGS_MODULE="focused_online_crawler.settings" scrapy crawl focused_online_crawler \
@@ -80,6 +82,12 @@ case $method in
 		read -p "n in n-grams used in DOM path vector representation: " n
 		echo ""
 		echo "Launching a run of Offline-DOM paths crawler for site $site_name ..."
+
+	    budget=${budget:--1}
+	    threshold=${threshold:-.75}
+	    m=${m:-12}
+	    w=${w:-15}
+	    n=${n:-2}
 
 		project_path="$current_dir/crawlers/dom_off_online_crawler"
 
@@ -104,6 +112,8 @@ case $method in
 		echo ""
 		echo "Launching a run of Breadth-First Search crawler for site $site_name ..."
 
+	    budget=${budget:--1}
+
 		project_path="$current_dir/crawlers/bfs_online_crawler"
 
 		PYTHONPATH="$project_path" SCRAPY_SETTINGS_MODULE="bfs_online_crawler.settings" scrapy crawl bfs_online_crawler \
@@ -121,6 +131,8 @@ case $method in
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		echo ""
 		echo "Launching a run of Depth-First Search crawler for site $site_name ..."
+
+	    budget=${budget:--1}
 
 		project_path="$current_dir/crawlers/dfs_online_crawler"
 
@@ -140,6 +152,8 @@ case $method in
 		echo ""
 		echo "Launching a run of random crawler for site $site_name ..."
 
+	    budget=${budget:--1}
+	    
 		project_path="$current_dir/crawlers/random_online_crawler"
 
 		PYTHONPATH="$project_path" SCRAPY_SETTINGS_MODULE="random_online_crawler.settings" scrapy crawl random_online_crawler \
