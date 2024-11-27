@@ -143,6 +143,12 @@ if __name__ == "__main__":
     table_name = site_name
     log_path = os.path.join(os.getcwd(), "crawlers/auer/logs", str(log_path_all_sites), str(site_name))
    
+    if not os.path.exists(os.path.join(os.getcwd(), "crawlers","auer","logs")):
+        os.mkdir(os.path.join(os.getcwd(), "crawlers","auer","logs"))
+
+    if not os.path.exists(os.path.join(os.getcwd(), "crawlers","auer","logs", str(log_path_all_sites))):
+        os.mkdir(os.path.join(os.getcwd(), "crawlers","auer","logs", str(log_path_all_sites)))    
+
     if not os.path.exists(log_path):
         os.mkdir(log_path)
 
