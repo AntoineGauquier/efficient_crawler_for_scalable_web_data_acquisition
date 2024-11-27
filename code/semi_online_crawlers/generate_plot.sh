@@ -18,12 +18,12 @@ read -p "Enter the website name: " site_name
 
 locations=()
 
-sb_location=$(get_location "SB crawler" "auer/logs")
-offline_dom_location=$(get_location "offline-DOM paths crawler" "offline_dom/logs")
-focused_location=$(get_location "focused crawler" "focused/logs")
-bfs_location=$(get_location "BFS crawler" "bfs/logs")
-dfs_location=$(get_location "DFS crawler" "dfs/logs")
-random_location=$(get_location "random crawler" "random/logs")
+sb_location=$(get_location "SB crawler" "auer_crawler/output")
+offline_dom_location=$(get_location "offline-DOM paths crawler" "dom_off_online_crawler/logs")
+focused_location=$(get_location "focused crawler" "focused_online_crawler/logs")
+bfs_location=$(get_location "BFS crawler" "bfs_online_crawler/logs")
+dfs_location=$(get_location "DFS crawler" "dfs_online_crawler/logs")
+random_location=$(get_location "random crawler" "random_online_crawler/logs")
 
 [[ -n "$sb_location" ]] && locations+=("$sb_location")
 [[ -n "$offline_dom_location" ]] && locations+=("$offline_dom_location")

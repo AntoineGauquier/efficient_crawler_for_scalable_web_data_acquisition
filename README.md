@@ -48,6 +48,16 @@ You will find in the [local_crawlers](code/local_crawlers/) folder, the code we 
 
 ### On-Line to Local Crawler
 
-In [online_to_local_crawler](code/online_to_local_crawler), you will find a script [online_to_local_crawling.sh](code/online_to_local_crawler/online_to_local_crawling.sh) that can be used to make local replications of websites, to further conduct local crawling experiments, as presented above. The replications as stored are SQLite3 [^1] relational databases in the [data](code/local_crawlers/data/) folder.
+In [online_to_local_crawler](code/online_to_local_crawler), you will find a script [online_to_local_crawling.sh](code/online_to_local_crawler/online_to_local_crawling.sh) that can be used to make local replications of websites, to further conduct local crawling experiments, as presented above. The replications as stored are SQLite3 [^1] relational databases in the [data](code/local_crawlers/data/) folder. 
+
+### Semi-Online Crawlers
+
+In [semi_online_crawlers](code/semi_online_crawlers) you will find the code we used to conduct the "semi-online" experiments, i.e., first checking if the wanted resource is on a local database, and otherwise crawling and storing it locally. Specifically:
+* [data](code/semi_online_crawlers/data/) is the place where are stored the local databases as `.db` files (in which we look for and add resources during the crawls)
+* [crawlers](code/semi_online_crawlers/crawlers/) contains the code of our crawler and the different baselines, leveraging the Scrapy [^2] framework. 
+* [crawl.sh](code/semi_online_crawlers/crawl.sh) is a script that runs crawls by choosing a crawler and specifying its parameters.
+* [graphical_results](code/semi_online_crawlers/graphical_results/) contains the code used to generate plots from crawls runs, exactly as in the paper.
+* [generate_plot.sh](code/semi_online_crawlers/generate_plot.sh) is a script that generates plots by specifying where are the crawl results, which crawlers you want to integrate, etc.
 
 [^1]: https://docs.python.org/3/library/sqlite3.html
+[^2]: https://pypi.org/project/Scrapy/
