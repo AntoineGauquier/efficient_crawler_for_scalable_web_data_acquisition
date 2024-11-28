@@ -115,8 +115,16 @@ class FocusedOnlineCrawler(scrapy.Spider):
         self.starting_url = kwargs.get('starting_url', None)
         self.name_of_table = kwargs.get('site_name', None)  
         self.starting_datetime = (datetime.now()).strftime("%d-%m-%Y_%H:%M:%S")
-        self.output_path = os.path.join(kwargs.get('output_path', None), self.starting_datetime + "_" + self.name_of_table)
+
+        self.expe_path = os.path.join(os.getcwd(), kwargs.get('output_path', None))
+        if not os.path.exists(self.expe_path):
+            os.mkdir(self.expe_path)
+        if not os.path.exists(os.path.join(self.expe_path, self.name_of_table)):
+            os.mkdir(os.path.join(self.expe_path, self.name_of_table))
+
+        self.output_path = os.path.join(self.expe_path, self.name_of_table, self.starting_datetime + "_" + self.name_of_table)
         os.mkdir(self.output_path)
+
         self.common_db_path = kwargs.get('path_to_common_db', None)
 
         if float(kwargs.get('budget', 100000000)) == -1:
