@@ -9,13 +9,13 @@ def plot_results(name_of_plot, locations, site_name, legend, colors, markers):
     max_len_site_nb = 0
     max_len_site_volume = 0
     for dir_r in os.listdir(os.path.join(os.getcwd(), 'crawlers', locations[-1], site_name)):
-        max_len_site_nb = len(list(np.load(os.path.join(os.getcwd(), 'crawlers', locations[-1], site_name, dir_r, "nb_data_resources.npy"))))
+        max_len_site_nb = len(list(np.load(os.path.join(os.getcwd(), 'crawlers', locations[-1], site_name, dir_r, "nb_data_resources.npy"))))/1e3
         data_volume_r = np.load(os.path.join(os.getcwd(), 'crawlers', locations[-1], site_name, dir_r, "data_volumes.npy"), allow_pickle = True)
 
         for array in data_volume_r:
             x, y = array
             if x > max_len_site_volume:
-                max_len_site_volume = x/1e6
+                max_len_site_volume = x/1e9
 
     plt.figure(figsize=(12, 6))
     fig, axs = plt.subplots(1, 2, figsize=(14, 7))
@@ -60,7 +60,7 @@ def plot_results(name_of_plot, locations, site_name, legend, colors, markers):
             x_aligned = np.linspace(0, max_len_site_nb, 1005)
             interpolated_list = []
             for resource_data in resource_data_list:
-                X = list(range(max_length))
+                X = [i/1e3 for i in range(max_length)]
                 Y = [val/1e3 for val in resource_data]
                 X.append(max_len_site_nb+1)
                 Y.append(Y[-1])
@@ -154,14 +154,14 @@ if __name__ == "__main__":
         for location in locations:
             if 'auer/logs/' in location:
                 legend.append('SB-CRAWLER')
-                colors.append('C0')
+                colors.append('C1')
                 markers.append('s')
             elif 'focused/logs/' in location:
                 legend.append('FOCUSED')
                 colors.append('C3')
                 markers.append('o')
             elif 'offline_dom/logs/' in location:
-                legend.append('OFFLINE-DOM')
+                legend.append('DOM-OFF')
                 colors.append('C2')
                 markers.append('D')
             elif 'bfs/logs/' in location:

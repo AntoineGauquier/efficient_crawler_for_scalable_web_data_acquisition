@@ -80,17 +80,17 @@ class GenericLocalCrawler(ABC):
         self.elapsed_times = []
         self.nb_data_resources = []
 
-        self.mime_types_data_resources = {'text/csv', 'application/csv', 'text/x-csv', 'application/x-csv', 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet', 'application/pdf', 'application/x-pdf', 'application/zip', 'application/x-zip-compressed', 'application/zip-compressed', 'application/x-tar', 'application/x-gtar', 'application/x-gzip', 'application/xml', 'application/json', 'text/json', 'application/yaml', 'text/yaml', 'text/x-yaml', 'application/x-yaml', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain', 'application/vnd.oasis.opendocument.text', 'application/vnd.ms-excel.sheet.macroenabled.12', 'application/x-7z-compressed', 'application/vnd.oasis.opendocument.presentation', 'application/rdf+xml', 'application/rss+xml', 'application/vnd.ms-excel', 'application/vnd.rar', 'application/x-rar-compressed', 'application/x-gtar'}
+        self.mime_types_data_resources = {'application/octet-stream', 'application/pdf', 'text/csv', 'application/csv', 'text/x-csv', 'application/x-csv', 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet', 'application/pdf', 'application/x-pdf', 'application/zip', 'application/x-zip-compressed', 'application/zip-compressed', 'application/x-tar', 'application/x-gtar', 'application/x-gzip', 'application/xml', 'application/json', 'text/json', 'application/yaml', 'text/yaml', 'text/x-yaml', 'application/x-yaml', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain', 'application/vnd.oasis.opendocument.text', 'application/vnd.ms-excel.sheet.macroenabled.12', 'application/x-7z-compressed', 'application/vnd.oasis.opendocument.presentation', 'application/rdf+xml', 'application/rss+xml', 'application/vnd.ms-excel', 'application/vnd.rar', 'application/x-rar-compressed', 'application/x-gtar'}
 
-        logging.info(db_path)
         self.connection = sqlite3.connect(db_path)
 
         self.log_path = os.path.join(log_path, (datetime.now()).strftime("%d-%m-%Y_%H:%M:%S") + "_" + self.table_name)
         os.mkdir(self.log_path) 
+
         logging.basicConfig(filename=os.path.join(self.log_path, 'crawl.log'), level=logging.INFO)
 
         self.labeled_urls = []
-        
+       
         logging.info("PARAMETERS OF THE CRAWL : ")
         logging.info("-\tdb_path: " + str(db_path))
         logging.info("-\ttable_name:" + str(table_name))
@@ -409,7 +409,6 @@ class GenericLocalCrawler(ABC):
 
         cursor = self.connection.cursor()
         query_str = "SELECT http_response, headers, body, content_length FROM {} WHERE url=?".format(self.table_name)
-        logging.info(query)
         query = cursor.execute(query_str, (link.get_url(),))
         result = query.fetchall()
 

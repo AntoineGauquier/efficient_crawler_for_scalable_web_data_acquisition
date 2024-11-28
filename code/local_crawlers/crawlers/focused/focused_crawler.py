@@ -77,14 +77,14 @@ class GenericLocalCrawlerAdapted(ABC):
         self.prologue_pattern = re.compile(r'<\?xml\s.*?\?>')
 
         self.already_visited = set()
-        self.resources_of_interest = set()
+        self.data_resources = set()
         self.not_exploitable_resources = set()
 
         self.data_volume = [] # A dictionnary of tuples (x, y) where x is the total volume of crawled data so far and y the total volum of crawled resources of interest so far
         self.elapsed_times = []
-        self.nb_resources_of_interest = []
+        self.nb_data_resources = []
 
-        self.mime_types_of_interest = {'application/octet-stream', 'application/pdf', 'text/csv', 'application/csv', 'text/x-csv', 'application/x-csv', 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet', 'application/pdf', 'application/x-pdf', 'application/zip', 'application/x-zip-compressed', 'application/zip-compressed', 'application/x-tar', 'application/x-gtar', 'application/x-gzip', 'application/xml', 'application/json', 'text/json', 'application/yaml', 'text/yaml', 'text/x-yaml', 'application/x-yaml', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain', 'application/vnd.oasis.opendocument.text', 'application/vnd.ms-excel.sheet.macroenabled.12', 'application/x-7z-compressed', 'application/vnd.oasis.opendocument.presentation', 'application/rdf+xml', 'application/rss+xml', 'application/vnd.ms-excel', 'application/vnd.rar', 'application/x-rar-compressed', 'application/x-gtar'}
+        self.mime_types_data_resources = {'application/octet-stream', 'application/pdf', 'text/csv', 'application/csv', 'text/x-csv', 'application/x-csv', 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet', 'application/pdf', 'application/x-pdf', 'application/zip', 'application/x-zip-compressed', 'application/zip-compressed', 'application/x-tar', 'application/x-gtar', 'application/x-gzip', 'application/xml', 'application/json', 'text/json', 'application/yaml', 'text/yaml', 'text/x-yaml', 'application/x-yaml', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain', 'application/vnd.oasis.opendocument.text', 'application/vnd.ms-excel.sheet.macroenabled.12', 'application/x-7z-compressed', 'application/vnd.oasis.opendocument.presentation', 'application/rdf+xml', 'application/rss+xml', 'application/vnd.ms-excel', 'application/vnd.rar', 'application/x-rar-compressed', 'application/x-gtar'}
 
         self.connection = sqlite3.connect(db_path)
         self.log_path = log_path + (datetime.now()).strftime("%d-%m-%Y_%H:%M:%S") + "_" + self.table_name + "/"
@@ -172,10 +172,10 @@ class GenericLocalCrawlerAdapted(ABC):
 
     def save_information(self):
         np.save(self.log_path + "already_visited.npy", self.already_visited)
-        np.save(self.log_path + "resources_of_interest.npy", self.resources_of_interest)
+        np.save(self.log_path + "data_resources.npy", self.data_resources)
         np.save(self.log_path + "elapsed_times.npy", self.elapsed_times)
-        np.save(self.log_path + "nb_resources_of_interest.npy", self.nb_resources_of_interest)
-        np.save(self.log_path + "data_volume.npy", self.data_volume)
+        np.save(self.log_path + "nb_data_resources.npy", self.nb_data_resources)
+        np.save(self.log_path + "data_volumes.npy", self.data_volume)
  
         logging.info("Information about the crawling saved succesfully in " + self.log_path)
 
@@ -219,11 +219,11 @@ class GenericLocalCrawlerAdapted(ABC):
             logging.info("Error in parsing HTML document. No URLs extracted.")
             return results, None
 
-    def count_request(self, content_length, is_resource_of_interest):
+    def count_request(self, content_length, is_data_resource):
         self.nb_episodes += 1
-        self.nb_resources_of_interest.append(len(self.resources_of_interest))
+        self.nb_data_resources.append(len(self.data_resources))
          
-        if is_resource_of_interest:
+        if is_data_resource:
             self.data_volume.append((self.data_volume[-1][0], self.data_volume[-1][1] + content_length))
         else:
             self.data_volume.append((self.data_volume[-1][0] + content_length, self.data_volume[-1][1]))
@@ -255,7 +255,7 @@ class GenericLocalCrawlerAdapted(ABC):
         
         self.data_volume.append((0, 0))
         self.elapsed_times.append(0)
-        self.nb_resources_of_interest.append(0)
+        self.nb_data_resources.append(0)
 
         self.max_depth = 0
 
@@ -270,7 +270,7 @@ class GenericLocalCrawlerAdapted(ABC):
             self.crawl_next_resource(link)
 
         self.elapsed_times.append(self.elapsed_times[-1] + perf_counter() - self.beginning)
-        self.nb_resources_of_interest.append(len(self.resources_of_interest))
+        self.nb_data_resources.append(len(self.data_resources))
 
         self.save_information()
     
@@ -337,23 +337,23 @@ class GenericLocalCrawlerAdapted(ABC):
                     if self.nb_episodes > 1:
                         self.add_labeled_data(link, 'non_target')
                     self.count_request(content_length, False)
-                else:# Scenario in which we predicted html but it was either interest or none_of_them, or for baslines where we do not use HEAD requests
-                    is_of_interest = mime_type in self.mime_types_of_interest # If true, we are crawling a resource of interest : only observed when we use an URL classifier with a RL agent, an corresponds to a misclassifiction (interest instead of html).
-                    if is_of_interest:
+                else:# Scenario in which we predicted html but it was either target or none_of_them, or for baslines where we do not use HEAD requests
+                    is_data_resource = mime_type in self.mime_types_data_resources # If true, we are crawling a data resource : only observed when we use an URL classifier with a RL agent, an corresponds to a misclassifiction (interest instead of html).
+                    if is_data_resource:
                         if self.nb_episodes > 1:
                             self.add_labeled_data(link, 'target')
-                        self.resources_of_interest.add(link)
+                        self.data_resources.add(link)
                     else:
                         if self.nb_episodes > 1:
                             self.add_labeled_data(link, 'non_target')
                         self.not_exploitable_resources.add(link.get_url())
-                    self.count_request(content_length, is_of_interest)
+                    self.count_request(content_length, is_data_resource)
 
                     return
-            else: # To filter responses which head does not come up with a content type. We cannot do anything in that case. Observed on https://fonction-publique.gouv.fr/
+            else: # To filter responses which head does not come up with a content type. We cannot do anything in that case. 
                 if self.nb_episodes > 1:
                     self.add_labeled_data(link, 'non_target')
-                self.not_exploitable_resources.add(link.get_url()) # We keep track of not exploitable resources (40X/500, neither of interest nor html, no content-type) so that we do not crawl them twice. 
+                self.not_exploitable_resources.add(link.get_url()) # We keep track of not exploitable resources (40X/500, neither of target nor html, no content-type) so that we do not crawl them twice. 
                 self.count_request(content_length, False)
                 return
 
@@ -375,7 +375,7 @@ class GenericLocalCrawlerAdapted(ABC):
             redirection_link.url = full_new_redirected_url
 
             logging.info("Status " + http_response + " encountered for URL " + link.get_url() + ", which was redirected to " + full_new_redirected_url + "!")
-            if redirection_link not in self.already_visited and not self.is_url_in_frontier(redirection_link) and redirection_link not in self.resources_of_interest and redirection_link.get_url() not in self.not_exploitable_resources: # To cover the scenario where the location is an URL that is already seen. Added because of https://www.fonction-publique.gouv.fr/coronavirus-covid-19, which redirects to itself. 
+            if redirection_link not in self.already_visited and not self.is_url_in_frontier(redirection_link) and redirection_link not in self.data_resources and redirection_link.get_url() not in self.not_exploitable_resources: # To cover the scenario where the location is an URL that is already seen. Added because of https://www.fonction-publique.gouv.fr/coronavirus-covid-19, which redirects to itself. 
                 if link.get_url() == self.starting_url: # To cover the case where we have a redirection at starting URL.
                     self.add_url(redirection_link)
                     return
@@ -410,7 +410,7 @@ class GenericLocalCrawlerAdapted(ABC):
                 continue
 
             new_link = Link(full_new_url, new_element['dom_path'])
-            if new_link not in self.already_visited and not self.is_url_in_frontier(new_link) and new_link not in self.resources_of_interest and new_link.get_url() not in self.not_exploitable_resources:
+            if new_link not in self.already_visited and not self.is_url_in_frontier(new_link) and new_link not in self.data_resources and new_link.get_url() not in self.not_exploitable_resources:
                 new_link.depth = link.depth + 1
                 new_link.anchor = new_element['anchor_text']
                 self.set_classifier_features(new_link)

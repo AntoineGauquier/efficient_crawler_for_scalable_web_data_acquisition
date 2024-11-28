@@ -1,5 +1,4 @@
 #!/bin/bash
-clear
 echo "Select the crawler you want to use for local crawling:"
 echo "Type 1 for Sleeping-Bandit (AUER algorithm) crawler"
 echo "Type 2 for Focused Crawler (baseline)"
@@ -11,11 +10,10 @@ read -p "Please enter the crawler's number you want to use: " method
 
 case $method in
     1)
-		clear
 		echo "The use of Sleeping-Bandit crawler requires to set a certain number of parameters, which follows."
 		read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
 		read -p "Number of runs: " num_executions
-		read -p "Name of the directory in which to save crawling information (X in auer/logs/X, make sure that it is created beforehand): " log_path_all_sites
+		read -p "Name of the experiment: " log_path_all_sites
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		read -p "Similarity threshold for link-to-action mapping (float between 0 and 1): " threshold
 		read -p "Parameter m in multiplicative hashing function: " m
@@ -43,10 +41,9 @@ case $method in
 		done
 	;;
     2)
-    clear
     echo "The use of the Focused Crawler requires to set a certain number of parameters, which follows."
     read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
-    read -p "Name of the directory in which to save crawling information (X in offline_dom/logs/X, make sure that it is created beforehand): " log_path_all_sites
+    read -p "Name of the experiment: " log_path_all_sites
     read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
     echo ""
     echo "Launching a run of Focused Crawler for site $site_name ..."
@@ -57,10 +54,9 @@ case $method in
     ;;
 
     3)
-		clear
 		echo "The use of Offline-DOM paths crawler requires to set a certain number of parameters, which follows."
 		read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
-		read -p "Name of the directory in which to save crawling information (X in offline_dom/logs/X, make sure that it is created beforehand): " log_path_all_sites
+        read -p "Name of the experiment: " log_path_all_sites
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		read -p "Similarity threshold for link-to-action mapping (float between 0 and 1): " threshold
 		read -p "Parameter m in multiplicative hashing function: " m
@@ -78,10 +74,9 @@ case $method in
 		python3 crawlers/offline_dom/offline_dom_crawler.py "$threshold" "$m" "$w" "$budget" "$n" 0 "$log_path_all_sites" "$site_name"
 	;;
 	4)
-		clear
 		echo "The use of Breadth-First Search crawler requires to set a certain number of parameters, which follows."
 		read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
-		read -p "Name of the directory in which to save crawling information (X in bfs/logs/X, make sure that it is created beforehand): " log_path_all_sites
+		read -p "Name of the experiment: " log_path_all_sites
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		echo ""
 		echo "Launching a run of Breadth-First Search crawler for site $site_name ..."
@@ -91,10 +86,9 @@ case $method in
 		python3 crawlers/bfs/bfs.py "$budget" "$log_path_all_sites" "$site_name"
 	;;
 	5)
-		clear
 		echo "The use of Depth-First Search crawler requires to set a certain number of parameters, which follows."
 		read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
-		read -p "Name of the directory in which to save crawling information (X in dfs/logs/X, make sure that it is created beforehand): " log_path_all_sites
+		read -p "Name of the experiment: " log_path_all_sites
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		echo ""
 		echo "Launching a run of Depth-First Search crawler for site $site_name ..."
@@ -105,10 +99,9 @@ case $method in
 	;;
 	6)
 
-		clear
 		echo "The use of random crawler requires to set a certain number of parameters, which follows."
 		read -p "Name of the website's local replica you want to crawl (name of .db file without extension, X in data/X.db): " site_name
-		read -p "Name of the directory in which to save crawling information (X in random/logs/X, make sure that it is created beforehand): " log_path_all_sites
+		read -p "Name of the experiment: " log_path_all_sites
 		read -p "Maximum number of crawling episodes (-1 for unlimited): " budget
 		echo ""
 		echo "Launching a run of random crawler for site $site_name ..."
