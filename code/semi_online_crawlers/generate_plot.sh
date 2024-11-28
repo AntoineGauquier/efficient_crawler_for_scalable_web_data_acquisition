@@ -19,7 +19,7 @@ locations=()
 
 sb_location=$(get_location "SB crawler" "crawlers/auer_crawler/output")
 focused_location=$(get_location "focused crawler" "crawlers/focused_online_crawler/output")
-offline_dom_location=$(get_location "offline-DOM paths crawler" "crawler/dom_off_online_crawler/output")
+offline_dom_location=$(get_location "offline-DOM paths crawler" "crawlers/dom_off_online_crawler/output")
 bfs_location=$(get_location "BFS crawler" "crawlers/bfs_online_crawler/output")
 dfs_location=$(get_location "DFS crawler" "crawlers/dfs_online_crawler/output")
 random_location=$(get_location "random crawler" "crawlers/random_online_crawler/output")

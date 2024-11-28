@@ -113,13 +113,19 @@ class AuerCrawler(scrapy.Spider):
         self.starting_url = kwargs.get('starting_url', None)
         self.name_of_table = kwargs.get('site_name', None)  
         self.starting_datetime = (datetime.now()).strftime("%d-%m-%Y_%H:%M:%S")
-        self.output_path = os.path.join(kwargs.get('output_path', None), self.starting_datetime + "_" + self.name_of_table)
+        self.expe_path = os.path.join(os.getcwd(), kwargs.get('output_path', None))
+        if not os.path.exists(self.expe_path):
+            os.mkdir(self.expe_path)
+        if not os.path.exists(os.path.join(self.expe_path, self.name_of_table)):
+            os.mkdir(os.path.join(self.expe_path, self.name_of_table))
+
+        self.output_path = os.path.join(self.expe_path, self.name_of_table, self.starting_datetime + "_" + self.name_of_table)
         os.mkdir(self.output_path)
         self.common_db_path = kwargs.get('path_to_common_db', None)
         self.alpha = kwargs.get('alpha', 2 * 2 ** 0.5)
 
         if self.alpha == "2s2":
-            self.alpha = 2 * 2 F** 0.5
+            self.alpha = 2 * 2 ** 0.5
         else:
             self.alpha = float(self.alpha)
 
@@ -316,11 +322,11 @@ class AuerCrawler(scrapy.Spider):
 
     def get_next_link(self):
         chosen_link = None
-
         scores = [(np_key, (self.actions[np_key]).get_score(self.alpha, self.nb_episodes)) for np_key in self.actions]
-    
+
         max_score = 0
         id_max = -1
+
         for action_id, action_score in scores:
             if action_score > max_score:
                 max_score = action_score
@@ -334,7 +340,7 @@ class AuerCrawler(scrapy.Spider):
         
         self.frontier[id_chosen_np].remove(chosen_link)
         self.frontier_length -= 1      
- 
+
         return chosen_link
 
     def is_crawling_terminated(self):
@@ -546,8 +552,8 @@ class AuerCrawler(scrapy.Spider):
             return None
 
     def parse(self, response):
+
         self.current_number_of_requests_in_scrapy_queue -= 1
-        assert(self.current_number_of_requests_in_scrapy_queue >= 0)
 
         if (self.is_crawling_terminated() or self.nb_episodes + 1 >= self.budget - 1) and self.nb_episodes > 1:
             self.elapsed_times.append(self.elapsed_times[-1] + perf_counter() - self.beginning)
@@ -563,7 +569,6 @@ class AuerCrawler(scrapy.Spider):
 
         link = response.meta['link']
         http_response = str(response.status)
-
         headers = {key.decode('utf-8'): value for key, value in dict(response.headers).items()}
 
         try:
@@ -609,7 +614,7 @@ class AuerCrawler(scrapy.Spider):
 
         if http_response[0] in ['4', '5'] or (http_response[0] == '3' and location is None):
             self.count_request(0, False)
-            self.logger.info("HTTP Error " + http_response + " : Resource \"" + link.get_url() + "\" is not available, or status is unknown. Identified at episode " + str(self.nb_episodes) + ". Not added to local DB.")
+            self.logger.info("HTTP Error " + http_response + " : Resource \"" + link.get_url() + "\" is not available, or status is unknown. Identified at episode " + str(self.nb_episodes) + ".")
             self.not_exploitable_resources.add(link.get_url())
             if link.supposed_to_be_html:
                 self.update_index_resource_supposed_to_be_html_but_is_not(link)#self.update_score_resource_not_html() 
@@ -699,10 +704,11 @@ class AuerCrawler(scrapy.Spider):
             if redirection_link not in self.already_visited and redirection_link not in self.yielded_to_scrapy  and not self.is_link_in_frontier(redirection_link) and redirection_link not in self.data_resources and redirection_link.get_url() not in self.not_exploitable_resources and self.is_url_on_same_or_sub_domain(self.starting_url, full_new_redirected_url) and len(full_new_redirected_url) <= len(self.starting_url) + self.max_len_from_root and not self.too_many_repeated_fragments(full_new_redirected_url, 3): 
                 self.current_number_of_requests_in_scrapy_queue += 1
                 self.yielded_to_scrapy.add(redirection_link)
-                yield scrapy.Request(redirection_link.get_url(), callback=self.parse, dont_filter=True, meta={'dont_redirect':True, 'link': redirection_link})
+                yield scrapy.Request(redirection_link.get_url(), callback=self.parse, dont_filter=True, meta={'dont_redirect':True, 'link': redirection_link, 'redirection':True})
                 return
              
             else:
+                self.logger.info("Redirection already visited.")
                 if link.supposed_to_be_html:
                     self.update_index_resource_supposed_to_be_html_but_is_not(link)
                 request_to_add = self.update_scrapy_queue_if_needed()
@@ -751,7 +757,6 @@ class AuerCrawler(scrapy.Spider):
 
                     if url_type == 'html':
                         new_link.supposed_to_be_html = True
-                        #self.logger.info("URL " + new_link.get_url() + " was added to frontier, from URL " + link.get_url() + ".")
                         self.add_link(new_link)
                         idx_element += 1
 
@@ -763,11 +768,12 @@ class AuerCrawler(scrapy.Spider):
                         yield scrapy.Request(new_link.get_url(), callback=self.parse, dont_filter=True, meta={'dont_redirect':True, 'link': new_link})
                     else:
                         self.not_exploitable_resources.add(new_link.get_url())
- 
-        referer_url = response.request.headers.get('Referer', b'').decode()
 
-        if link.get_url() != self.starting_url and self.starting_url != referer_url and not self.is_offline_baseline and not self.is_standard_baseline:                
-            self.update_score(reward, link)
+        if link.get_url() != self.starting_url and not self.is_offline_baseline and not self.is_standard_baseline:
+            if len(self.already_visited) <= 5 and self.starting_url == response.request.headers.get('Referer', b'').decode() and (http_response[0] == '3' or 'redirection' in response.meta.keys()): # Handling case where we start with a few redirections
+                pass
+            else:
+                self.update_score(reward, link)
 
         if reward > 0 and not self.is_standard_baseline and not self.is_offline_baseline:
             self.reward_distribution.append((link.url, reward))

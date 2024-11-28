@@ -111,8 +111,17 @@ class DomOffOnlineCrawler(scrapy.Spider):
         self.starting_url = kwargs.get('starting_url', None)
         self.name_of_table = kwargs.get('site_name', None)  
         self.starting_datetime = (datetime.now()).strftime("%d-%m-%Y_%H:%M:%S")
-        self.output_path = os.path.join(kwargs.get('output_path', None), self.starting_datetime + "_" + self.name_of_table)
+
+        self.expe_path = os.path.join(os.getcwd(), kwargs.get('output_path', None))
+        if not os.path.exists(self.expe_path):
+            os.mkdir(self.expe_path)
+        if not os.path.exists(os.path.join(self.expe_path, self.name_of_table)):
+            os.mkdir(os.path.join(self.expe_path, self.name_of_table))
+
+        self.output_path = os.path.join(self.expe_path, self.name_of_table, self.starting_datetime + "_" + self.name_of_table)
         os.mkdir(self.output_path)
+
+
         self.common_db_path = kwargs.get('path_to_common_db', None)
         self.threshold = float(kwargs.get('threshold', 0.75))
         self.m = int(kwargs.get('m', 12))
@@ -255,9 +264,7 @@ class DomOffOnlineCrawler(scrapy.Spider):
         np.save(os.path.join(self.output_path, "nb_data_resources.npy"), self.nb_data_resources)
         np.save(os.path.join(self.output_path, "data_volumes.npy"), self.data_volumes)
         np.save(os.path.join(self.output_path, "reward_distribution.npy"), self.reward_distribution)
-
-        if not self.is_standard_baseline:
-            np.save(os.path.join(self.output_path, "actions.npy"), self.actions)
+        np.save(os.path.join(self.output_path, "actions.npy"), self.actions)
 
         logging.info("Information about the crawling saved succesfully in " + self.output_path)
 
@@ -438,7 +445,7 @@ class DomOffOnlineCrawler(scrapy.Spider):
 
         if http_response[0] in ['4', '5'] or (http_response[0] == '3' and location is None):
             self.count_request(0, False)
-            self.logger.info("HTTP Error " + http_response + " : Resource \"" + link.get_url() + "\" is not available, or status is unknown. Identified at episode " + str(self.nb_episodes) + ". Not added to local DB.")
+            self.logger.info("HTTP Error " + http_response + " : Resource \"" + link.get_url() + "\" is not available, or status is unknown. Identified at episode " + str(self.nb_episodes) + ".")
             self.not_exploitable_resources.add(link.get_url())
 
             request_to_add = self.update_scrapy_queue_if_needed()
@@ -517,7 +524,7 @@ class DomOffOnlineCrawler(scrapy.Spider):
             if redirection_link not in self.already_visited and redirection_link not in self.yielded_to_scrapy  and not self.is_link_in_frontier(redirection_link) and redirection_link not in self.data_resources and redirection_link.get_url() not in self.not_exploitable_resources and self.is_url_on_same_or_sub_domain(self.starting_url, full_new_redirected_url) and len(full_new_redirected_url) <= len(self.starting_url) + self.max_len_from_root and not self.too_many_repeated_fragments(full_new_redirected_url, 3): 
                 self.current_number_of_requests_in_scrapy_queue += 1
                 self.yielded_to_scrapy.add(redirection_link)
-                yield scrapy.Request(redirection_link.get_url(), callback=self.parse, dont_filter=True, meta={'dont_redirect':True, 'link': redirection_link})
+                yield scrapy.Request(redirection_link.get_url(), callback=self.parse, dont_filter=True, meta={'dont_redirect':True, 'link': redirection_link, 'redirection':True})
                 if self.nb_episodes < 3000 and self.nb_episodes > 1:
                     self.update_score(0, link)
                 return
@@ -591,11 +598,12 @@ class DomOffOnlineCrawler(scrapy.Spider):
 
                 new_link.depth = link.depth + 1
                 self.add_link(new_link)
-                
-        referer_url = response.request.headers.get('Referer', b'').decode()
 
-        if link.get_url() != self.starting_url and self.starting_url != referer_url and self.nb_episodes < 3000 and self.nb_episodes > 1:
-            self.update_score(score_learning_phase, link)
+        if link.get_url() != self.starting_url and self.nb_episodes < 3000:
+            if len(self.already_visited) <= 5 and self.starting_url == response.request.headers.get('Referer', b'').decode() and (http_response[0] == '3' or 'redirection' in response.meta.keys()): # Handling case where we start with a few redirections
+                pass
+            else:
+                self.update_score(score_learning_phase, link)
 
         request_to_add = self.update_scrapy_queue_if_needed()
 
