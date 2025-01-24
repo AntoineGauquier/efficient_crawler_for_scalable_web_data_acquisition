@@ -1,6 +1,5 @@
 import sys
 import os
-#sys.path.append(os.path.join(os.getcwd(),'/home/gauquier/efficent_crawler_for_scalable_web_data_acquisition/auer_crawler/online_auer_crawler/online_auer_crawler/spiders'))
 import copy
 
 import math
