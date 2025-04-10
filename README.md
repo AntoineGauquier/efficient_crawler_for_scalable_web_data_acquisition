@@ -1,13 +1,7 @@
 # Efficient Crawling for Scalable Web Data Acquisition (technical report and experiment reproducibility kit)
 
-This repository provides additional content, code, and data supplementing the
+This repository provides code, and data supplementing the
 research article *Efficient Crawling for Scalable Web Data Acquisition*.
-
-## Additional content
-
-[Technical report (extended version of the paper)](main.pdf), with
-detailed experimental results, additional related work, and proof of
-intractability of the graph crawling problem.
 
 ## Websites
 
