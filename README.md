@@ -1,4 +1,4 @@
-# Efficient Crawling for Scalable Web Data Acquisition (technical report and experiment reproducibility kit)
+# Efficient Crawling for Scalable Web Data Acquisition (experiment reproducibility kit)
 
 This repository provides code, and data supplementing the
 research article *Efficient Crawling for Scalable Web Data Acquisition*.
