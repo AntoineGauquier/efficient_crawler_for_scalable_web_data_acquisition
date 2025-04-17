@@ -1,7 +1,11 @@
 # Efficient Crawling for Scalable Web Data Acquisition (experiment reproducibility kit)
 
-This repository provides code, and data supplementing the
+This repository provides additional content (Appendix), code, and data supplementing the
 research article *Efficient Crawling for Scalable Web Data Acquisition*.
+
+## Additional content
+
+[Appendix of the research paper](appendix.pdf) presents graphical results of the experiments that couldn't fit in the paper, as well as proof of intractability of the graph crawling problem.  
 
 ## Websites
 
