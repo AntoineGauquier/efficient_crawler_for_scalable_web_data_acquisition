@@ -167,6 +167,9 @@ class AuerCrawler(scrapy.Spider):
 
         self.mime_types_data_resources = {'application/octet-stream', 'text/csv', 'application/csv', 'text/x-csv', 'application/x-csv', 'text/x-comma-separated-values', 'text/comma-separated-values', 'application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/vnd.oasis.opendocument.spreadsheet', 'application/pdf', 'application/x-pdf', 'application/zip', 'application/x-zip-compressed', 'application/zip-compressed', 'application/x-tar', 'application/x-gtar', 'application/x-gzip', 'application/xml', 'application/json', 'text/json', 'application/yaml', 'text/yaml', 'text/x-yaml', 'application/x-yaml', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/vnd.openxmlformats-officedocument.wordprocessingml.template', 'application/vnd.openxmlformats-officedocument.presentationml.presentation', 'text/plain', 'application/vnd.oasis.opendocument.text', 'application/vnd.ms-excel.sheet.macroenabled.12', 'application/x-7z-compressed', 'application/vnd.oasis.opendocument.presentation', 'application/rdf+xml', 'application/rss+xml', 'application/vnd.ms-excel', 'application/vnd.rar', 'application/x-rar-compressed', 'application/x-gtar'}
 
+        self.blocklist_extensions = {'.dts', '.mkv', '.ptx', '.jif', '.opus', '.ppm', '.m4v', '.wma', '.m4p', '.webp', '.erf', '.cr2', '.aff', '.crw', '.rgb', '.pcx', '.mpg', '.adp', '.m4a', '.raw', '.ico', '.3gp', '.asx', '.bmp', '.3gpa', '.djv', '.viv', '.fh4', '.asf', '.tif', '.3gpp2', '.mrw', '.avif', '.jpgm', '.g3', '.m4r', '.mmr', '.pic', '.eol', '.fst', '.xif', '.wvx', '.ram', '.mpga', '.ra', '.djvu', '.ecelp4800', '.heif', '.pnm', '.cgm', '.mid', '.3ga', '.mp3', '.h261', '.jfif', '.mpeg', '.jpg', '.mpa', '.fvt', '.avi', '.arw', '.m4u', '.npx', '.lvp', '.mka', '.raf', '.mdi', '.orf', '.dng', '.xbm', '.dtshd', '.aif', '.rmi', '.sr2', '.ogg', '.pct', '.h264', '.movie', '.ecelp7470', '.jpm', '.srf', '.flac', '.fli', '.heic', '.wbmp', '.btif', '.rlc', '.3gpp', '.jpgv', '.tiff', '.kdc', '.gif', '.icns', '.m1v', '.dwg', '.webm', '.mp4v', '.oga', '.rw2', '.mpg4', '.aacp', '.mov', '.ief', '.xwd', '.pyv', '.wm', '.cmx', '.fh7', '.m3u', '.x3f', '.wax', '.fh', '.avifs', '.mp2a', '.pbm', '.wmv', '.pya', '.qt', '.wav', '.mxu', '.ts', '.fh5', '.jfif-tbnl', '.dcr', '.k25', '.m2a', '.pjpg', '.fpx', '.snd', '.jpe', '.rwl', '.jfi', '.h263', '.mpe', '.rmp', '.svg', '.psd', '.fbs', '.xpm', '.nef', '.png', '.pgm', '.spx', '.midi', '.3gp2', '.svgz', '.aiff', '.f4v', '.dxf', '.mj2', '.ogv', '.flv', '.wmx', '.kar', '.jpeg', '.pef', '.m4b', '.mp2', '.ras', '.3g2', '.mp4', '.weba', '.m2v', '.ecelp9600', '.fhc', '.mjp2', '.m3a', '.aac'}
+        self.blocklist_mime_types = {'audio/', 'video/', 'image/'}
+
         self.connection_common_db = sqlite3.connect(os.path.join(self.common_db_path, self.name_of_table + ".db"), timeout=180)
         self.create_table_common_db()
 
@@ -612,6 +615,23 @@ class AuerCrawler(scrapy.Spider):
         if link.get_url() in self.set_of_url_automatically_classified:
             associated_predicted_url = self.set_of_url_automatically_classified[link.get_url()]
 
+        if 'Content-Type' in headers:
+            mime_type = response.headers.get(b'Content-Type', b'').decode('utf-8').lower()
+            if ";" in mime_type:
+                mime_type = mime_type.split(";")[0]
+                for blocklisted_mt in self.blocklist_mime_types:
+                    if blocklisted_mt in mime_type:
+                        self.count_request(len(bytes(headers)), False)
+                        self.logger.info("Download of resource \""+link.get_url() + "\" was stopped early (banned MIME type).")
+                        self.not_exploitable_resources.add(link.get_url())
+                        if link.supposed_to_be_html:
+                            self.update_index_resource_supposed_to_be_html_but_is_not(link)
+                        if request_to_add is not None:
+                            self.current_number_of_requests_in_scrapy_queue += 1
+                            self.yielded_to_scrapy.add(request_to_add.meta['link'])
+                            yield request_to_add
+                        return
+
         if http_response[0] in ['4', '5'] or (http_response[0] == '3' and location is None):
             self.count_request(0, False)
             self.logger.info("HTTP Error " + http_response + " : Resource \"" + link.get_url() + "\" is not available, or status is unknown. Identified at episode " + str(self.nb_episodes) + ".")
@@ -739,6 +759,9 @@ class AuerCrawler(scrapy.Spider):
                 except:
                     self.logger.info("Exception occured while trying to parse the URL \"" + str(new_element['url']) + "\" . It probably contains unhandled characters under NKFC normalization.")
                     continue
+
+            if ("." + full_new_url.split(".")[-1]) in self.blocklist_extensions:
+                continue
 
             if not self.is_url_on_same_or_sub_domain(self.starting_url, full_new_url) or len(full_new_url) > len(self.starting_url) + self.max_len_from_root or self.too_many_repeated_fragments(full_new_url, 3):
                 continue
