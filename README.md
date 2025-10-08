@@ -5,7 +5,19 @@ research article *Efficient Crawling for Scalable Web Data Acquisition*.
 
 ## Additional content
 
-[Appendix of the research paper](appendix.pdf) presents graphical results of the experiments that couldn't fit in the paper, as well as proof of intractability of the graph crawling problem.  
+[An extended version of the research paper](extended_version.pdf) presents the following additional material in its Appendix:
+- The proof of Proposition 4
+- Additional details about the websites’ characteristics
+- The MIME type list defining the targets used in the experiments
+- The initial keyword set provided to TRES
+- A complete blocklist of URL extensions and MIME types
+- The plots of the 8 websites that could not be included in Figure 4
+- The exhaustive plots from the hyper-parameter studies
+- Extra examples of typical tag paths
+- Additional results on URL classification quality
+- A visualization of the early-stopping mechanism for two websites
+- A table summarizing the main characteristics of related focused crawlers
+- An extended discussion of other crawler types, as well as alternatives to AUER for MAB algorithms
 
 ## Websites
 
