@@ -1,0 +1,196 @@
+============================================================
+Site: bea
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html             8713.53             4674.53                0.0
+true_data_resource    4790.13            11269.80                0.0
+true_none_of_them      721.33             2104.20                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               28.82               16.25                0.0
+true_data_resource      16.98               37.15                0.0
+true_none_of_them        0.17                0.63                0.0
+
+
+============================================================
+Site: cnis
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html             5246.13               32.33                0.0
+true_data_resource     279.67             7218.33                0.0
+true_none_of_them        8.93                4.07                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               41.02                0.25                0.0
+true_data_resource       2.19               56.44                0.0
+true_none_of_them        0.07                0.03                0.0
+
+
+============================================================
+Site: collectivites_locales
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html             1580.93               97.13                0.0
+true_data_resource     596.13             3096.93                0.0
+true_none_of_them      187.33              257.27                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               27.18                1.67                0.0
+true_data_resource      10.25               53.25                0.0
+true_none_of_them        3.22                4.42                0.0
+
+
+============================================================
+Site: interieur
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html           883550.60              319.33                0.0
+true_data_resource     313.27            24374.53                0.0
+true_none_of_them    90632.67             3626.47                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               88.11                0.03                0.0
+true_data_resource       0.03                2.43                0.0
+true_none_of_them        9.04                0.36                0.0
+
+
+============================================================
+Site: justice
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html            40431.60              353.67                0.0
+true_data_resource     532.07            14312.93                0.0
+true_none_of_them      227.47             1221.20                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               70.83                0.62                0.0
+true_data_resource       0.93               25.08                0.0
+true_none_of_them        0.40                2.14                0.0
+
+
+============================================================
+Site: okfn
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html           388622.93             8419.53                0.0
+true_data_resource    1742.47            10984.60                0.0
+true_none_of_them    11219.40             1787.00                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               91.92                1.99                0.0
+true_data_resource       0.41                2.60                0.0
+true_none_of_them        2.65                0.42                0.0
+
+
+============================================================
+Site: education
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html            85688.53             2826.60                0.0
+true_data_resource     208.40            10146.87                0.0
+true_none_of_them     8614.67             1375.27                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               78.71                2.60                0.0
+true_data_resource       0.19                9.32                0.0
+true_none_of_them        7.91                1.26                0.0
+
+
+============================================================
+Site: nces
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html           219240.67             2603.73                0.0
+true_data_resource     713.73            82309.73                0.0
+true_none_of_them     1318.33              815.33                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               71.41                0.85                0.0
+true_data_resource       0.23               26.81                0.0
+true_none_of_them        0.43                0.27                0.0
+
+
+============================================================
+Site: psa_qa
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html             1308.87                32.8                0.0
+true_data_resource      83.13              2350.6                0.0
+true_none_of_them     1362.00               205.0                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               24.50                0.61                0.0
+true_data_resource       1.56               44.00                0.0
+true_none_of_them       25.49                3.84                0.0
+
+
+============================================================
+Site: insee
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html           118815.27              101.07                0.0
+true_data_resource     104.93           169664.93                0.0
+true_none_of_them     1080.00             1510.00                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               40.79                0.03                0.0
+true_data_resource       0.04               58.25                0.0
+true_none_of_them        0.37                0.52                0.0
+
+
+============================================================
+Site: oecd
+============================================================
+
+Confusion Matrix (avg. raw counts per run):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html           145318.27            15851.07                0.0
+true_data_resource    1085.20            42095.53                0.0
+true_none_of_them     2090.07             4644.80                0.0
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               68.84                7.51                0.0
+true_data_resource       0.51               19.94                0.0
+true_none_of_them        0.99                2.20                0.0
+
+
+============================================================
+INTER-SITE AVERAGE (11 sites)
+============================================================
+
+Confusion Matrix (% of all entries, sum = 100):
+                    pred_html  pred_data_resource  pred_none_of_them
+true_html               57.47                2.94                  0
+true_data_resource       3.03               30.48                  0
+true_none_of_them        4.61                1.46                  0
