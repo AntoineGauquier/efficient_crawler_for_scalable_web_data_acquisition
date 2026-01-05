@@ -14,6 +14,7 @@ research article *Efficient Crawling for Scalable Web Data Acquisition*.
 - The plots of the 8 websites that could not be included in Figure 4
 - The exhaustive plots from the hyper-parameter studies
 - Extra examples of typical tag paths
+- Plots and inter-site confusion matrices for URL classifier models evaluation (exhaustive 88 confusion matrices can be found under [url_classifier_confusion_matrices](url_classifier_confusion_matrices/))
 - Additional results on URL classification quality
 - A visualization of the early-stopping mechanism for two websites
 - A table summarizing the main characteristics of related focused crawlers
